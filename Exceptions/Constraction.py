@@ -9,4 +9,3 @@ except ValueError  as msg:
     print('Engter only interger value: ', msg)
 finally:
   print("The 'try except' is finished")
-
