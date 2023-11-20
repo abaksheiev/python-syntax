@@ -4,25 +4,23 @@ from time import *
 class MyData:
     def __init__(self):
         self.data = 0
-        self.flag = False
-        self.lock = Lock()
-    
+        self.cv = Condition()
+      
     def put(self, d):
-        while self.flag != False:
-            pass
-        self.lock.acquire()
+        self.cv.acquire()
+        self.cv.wait()
+
         self.data = d
-        self.flag = True
-        self.lock.release()
+        self.cv.notify()
+        self.cv.release()
         sleep(0.1)
 
     def get(self):
-        while self.flag != True:
-            pass
-        self.lock.acquire()
+        self.cv.acquire()
+        self.cv.wait(timeout=0)
         x = self.data  
-        self.flag = False
-        self.lock.release()
+        self.cv.notify()
+        self.cv.release()
         sleep(0.1)
         return x
     
